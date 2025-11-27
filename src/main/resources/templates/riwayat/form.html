@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Transaksi Stok - GUDANGin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; }
+        .navbar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1rem 2rem; }
+        .navbar h1 { font-size: 1.5rem; }
+        .container { max-width: 600px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333; }
+        input, select, textarea { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; }
+        textarea { resize: vertical; min-height: 100px; }
+        .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: all 0.3s; }
+        .btn-primary { background: #667eea; color: white; }
+        .btn-primary:hover { background: #5568d3; }
+        .btn-secondary { background: #95a5a6; color: white; text-decoration: none; display: inline-block; }
+        .btn-secondary:hover { background: #7f8c8d; }
+        .form-actions { display: flex; gap: 1rem; margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>📊 Form Transaksi Stok</h1>
+    </div>
+    
+    <div class="container">
+        <form th:action="@{/riwayat/simpan}" th:object="${riwayat}" method="post">
+            <div class="form-group">
+                <label>Produk:</label>
+                <select th:field="*{produk.id}" required>
+                    <option value="">-- Pilih Produk --</option>
+                    <option th:each="prod : ${produkList}" 
+                            th:value="${prod.id}" 
+                            th:text="${prod.namaProduk}">Produk</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Jenis Transaksi:</label>
+                <select th:field="*{jenis}" required>
+                    <option value="">-- Pilih Jenis --</option>
+                    <option value="masuk">Stok Masuk</option>
+                    <option value="keluar">Stok Keluar</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Jumlah:</label>
+                <input type="number" th:field="*{jumlah}" required min="1">
+            </div>
+            
+            <div class="form-group">
+                <label>Tanggal:</label>
+                <input type="date" th:field="*{tanggal}" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Keterangan:</label>
+                <textarea th:field="*{keterangan}" rows="4"></textarea>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">💾 Simpan</button>
+                <a href="/riwayat" class="btn btn-secondary">← Batal</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

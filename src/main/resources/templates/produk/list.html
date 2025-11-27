@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Produk - GUDANGin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; }
+        .navbar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1rem 2rem; }
+        .navbar h1 { font-size: 1.5rem; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; font-weight: bold; transition: all 0.3s; }
+        .btn-primary { background: #667eea; color: white; }
+        .btn-primary:hover { background: #5568d3; }
+        .btn-danger { background: #e74c3c; color: white; }
+        .btn-danger:hover { background: #c0392b; }
+        .btn-warning { background: #f39c12; color: white; }
+        .btn-warning:hover { background: #e67e22; }
+        .search-box { display: flex; gap: 0.5rem; }
+        .search-box input { padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; width: 300px; }
+        table { width: 100%; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        th { background: #667eea; color: white; padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid #eee; }
+        tr:hover { background: #f8f9fa; }
+        .badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; font-weight: bold; }
+        .badge-danger { background: #ffebee; color: #c62828; }
+        .badge-warning { background: #fff3e0; color: #ef6c00; }
+        .badge-success { background: #e8f5e9; color: #2e7d32; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>📦 Daftar Produk</h1>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="search-box">
+                <form method="get" style="display: flex; gap: 0.5rem;">
+                    <input type="text" name="search" placeholder="Cari produk...">
+                    <button type="submit" class="btn btn-primary">Cari</button>
+                    <a href="/produk" class="btn btn-warning">Reset</a>
+                </form>
+            </div>
+            <div>
+                <a href="/produk/tambah" class="btn btn-primary">+ Tambah Produk</a>
+                <a href="/" class="btn" style="background: #95a5a6; color: white;">← Kembali</a>
+            </div>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nama Produk</th>
+                    <th>Kategori</th>
+                    <th>Harga</th>
+                    <th>Stok</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="produk : ${produkList}">
+                    <td th:text="${produk.id}">1</td>
+                    <td th:text="${produk.namaProduk}">Nama Produk</td>
+                    <td th:text="${produk.kategori != null ? produk.kategori.namaKategori : '-'}">Kategori</td>
+                    <td th:text="'Rp ' + ${#numbers.formatDecimal(produk.harga, 0, 'COMMA', 0, 'POINT')}">Rp 0</td>
+                    <td>
+                        <span th:classappend="${produk.stok < 10 ? 'badge-danger' : (produk.stok < 50 ? 'badge-warning' : 'badge-success')}" 
+                              class="badge" 
+                              th:text="${produk.stok}">0</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/produk/edit/{id}(id=${produk.id})}" class="btn btn-warning" style="padding: 0.5rem 1rem;">Edit</a>
+                        <a th:href="@{/produk/hapus/{id}(id=${produk.id})}" class="btn btn-danger" style="padding: 0.5rem 1rem;" onclick="return confirm('Yakin hapus produk ini?')">Hapus</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

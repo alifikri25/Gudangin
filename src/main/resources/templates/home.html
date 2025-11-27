@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - GUDANGin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; }
+        .navbar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1rem 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .navbar h1 { font-size: 1.8rem; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .card { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
+        .card h2 { color: #667eea; font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .card p { color: #666; font-size: 1rem; }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .menu-btn { display: block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1.5rem; text-align: center; text-decoration: none; border-radius: 10px; font-weight: bold; transition: all 0.3s; }
+        .menu-btn:hover { transform: scale(1.05); box-shadow: 0 6px 12px rgba(0,0,0,0.2); }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>📦 GUDANGin - Sistem Manajemen Gudang</h1>
+    </div>
+    
+    <div class="container">
+        <div class="card-grid">
+            <div class="card">
+                <h2 th:text="${totalProduk}">0</h2>
+                <p>Total Produk</p>
+            </div>
+            <div class="card">
+                <h2 th:text="${totalKategori}">0</h2>
+                <p>Total Kategori</p>
+            </div>
+            <div class="card">
+                <h2 th:text="${totalRiwayat}">0</h2>
+                <p>Total Transaksi</p>
+            </div>
+            <div class="card">
+                <h2 th:text="${stokRendah}" style="color: #e74c3c;">0</h2>
+                <p>Stok Rendah (< 10)</p>
+            </div>
+        </div>
+        
+        <h2 style="margin-bottom: 1rem; color: #333;">Menu Utama</h2>
+        <div class="menu-grid">
+            <a href="/produk" class="menu-btn">📦 Kelola Produk</a>
+            <a href="/kategori" class="menu-btn">📁 Kelola Kategori</a>
+            <a href="/riwayat" class="menu-btn">📊 Riwayat Stok</a>
+        </div>
+    </div>
+</body>
+</html>
